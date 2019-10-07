@@ -7,3 +7,8 @@ myvenv
 db.sqlite3
 /static
 .DS_Store
+bin/
+lib/
+lib64*
+pip-selfcheck.json
+pyvenv.cfg
