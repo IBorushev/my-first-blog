@@ -92,7 +92,6 @@ def comment_edit(request, pk):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.post = 4
             comment.author = request.user
             comment.save()
             print(1)
