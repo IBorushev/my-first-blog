@@ -86,18 +86,15 @@ def comment_approve(request, pk):
     return redirect('post_detail', pk=comment.post.pk)
 
 @login_required
-def comment_edit(request, pk):
+def comment_edit(request, pk, post_id):
     comment = get_object_or_404(Comment, pk=pk)
+    post = get_object_or_404(Post, pk=post_id)
     if request.method == "POST":
-        form = CommentForm(request.POST)
+        form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.author = request.user
             comment.save()
-            print(1)
-            return redirect('post_detail', pk=comment.pk)
+            return redirect('post_detail', pk=post.pk)
     else:
-        form = CommentForm()
-        print(2)
-    print(3)
-    return render(request, 'blog/add_comment_to_post.html', {'form': form})
+        form = CommentForm(instance=comment)
+    return render(request, 'blog/comment_edit.html', {'form': form})
